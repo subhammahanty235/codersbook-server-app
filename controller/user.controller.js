@@ -28,7 +28,7 @@ const editprofile = async(req,res)=>{
     if(data.email)newdata.email = data.email
     if(data.bio){
         let newbio = data.bio.replace(/\\n/g, '\n');
-        console.log(newbio)
+        // console.log(newbio)
         newdata.bio = newbio
     }
     
@@ -58,7 +58,7 @@ const followuser = async(req,res)=>{
     const othid = req.params.id;
     let flag = false;
     try {
-
+        
         await User.findByIdAndUpdate(othid, { $push: { followers: myid } });
         await User.findByIdAndUpdate(myid, { $push: { following: othid } });
         flag = true;
