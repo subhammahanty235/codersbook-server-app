@@ -22,6 +22,8 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use('/api/auth', require('./routes/userroute'))
 app.use('/api/post', require('./routes/postroute'))
-app.listen(5000, () => {
-    console.log(`App is running on port : ${5000}`)
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`App is running on port : ${PORT}`)
 })
