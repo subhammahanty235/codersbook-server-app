@@ -58,7 +58,7 @@ const UserSchema = mongoose.Schema({
 )
 
 
-UserSchema.post('save',async function(){
+UserSchema.pre('save',async function(next){
     let randomnumber = Math.floor(Math.random() * (9999 - 1111 + 1)) + 1111;
     let namepart = this.name.slice(0,4);
     namepart = namepart.trim();
@@ -67,6 +67,7 @@ UserSchema.post('save',async function(){
     if(this.profilepic===null){
         this.profilepic = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR80vbIZec_RnLcJISeMtsmdZ1OIA87Y_U0tw&usqp=CAU"
     }
+    next();
     // console.log(this.username)
 })
 
