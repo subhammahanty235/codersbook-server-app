@@ -1,5 +1,6 @@
 
 const Post = require('../models/posts');
+const User = require('../models/user');
 
 
 // 1. upload a post
@@ -11,8 +12,28 @@ const Post = require('../models/posts');
 
 const showallposts = async (req, res) => {
     try {
-        const data = await Post.find().sort({ createdAt: -1 });
-        res.json(data);
+        // console.log("shsuhhuhtghtufrfu")
+        const userid = req.user.id
+        const followings_user = await User.findOne({_id:userid}).select("following -_id");
+        const followedPosts = await Post.find({'uploadedBy': {$in: followings_user.following}}).sort({createdAt: -1});
+        const otherPosts = await Post.find({'uploadedBy': {$nin: followings_user.following}}).sort({createdAt: -1});
+        otherPosts.sort(() => Math.random() - 0.5);
+        if(followedPosts){
+            const posts = followedPosts.concat(otherPosts);
+            res.send(posts)
+
+        }
+        else{
+            res.send(otherPosts)
+        }
+
+        // const data = await Post.find().sort({ createdAt: -1 });
+        // data.sort(() => Math.random() - 0.5);
+        // console.log(data)
+        // res.send(followings_user)
+        // res.send(followedPosts)
+        // res.json({"USer":"82838"});
+        // res.send("hshshs")
     } catch (error) {
         res.send(error)
     }
