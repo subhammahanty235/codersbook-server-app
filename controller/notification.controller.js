@@ -30,4 +30,6 @@ const getallnotification = async()=>{
 
   }
 
+
+
   module.exports = {newnotification , getallnotification};

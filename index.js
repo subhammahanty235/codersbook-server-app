@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 const app = express()
-const io = require("socket.io")(server);
+const io = require("socket.io")(app);
 
 
 app.use(express.json());
