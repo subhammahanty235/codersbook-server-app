@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 const app = express()
-const io = require("socket.io")(app);
+// const socket = require("socket.io");
 
 
 app.use(express.json());
@@ -30,12 +30,19 @@ app.use('/api/post', require('./routes/postroute'))
 app.use("/api/notification" , require('./routes/notificationroute'))
 
 
-io.on("connection", socket => {
-    console.log("a user connected");
-  });
+// io.on("connection", socket => {
+//     console.log("a user connected");
+//   });
+
 
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`App is running on port : ${PORT}`)
 })
+
+// const io = socket(server , {
+//     cors:{
+//         origin:"https://loca"
+//     }
+// })
