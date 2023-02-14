@@ -99,14 +99,27 @@ const checkusername = async(req,res)=>{
     }
 }
 const getuserdetails = async(req,res)=>{
-    const id = req.params.id;
-    try {
-        const userdata = await User.findOne({_id:id}).select("-password");
-        const postbyuser = await Post.find({uploadedBy:id}).sort({createdAt:-1});
-        res.json({user:userdata , posts:postbyuser})
-    } catch (error) {
-        res.send(error)
+    const id = req.query.id;
+    const username = req.query.username
+    if(id){
+        try {
+            const userdata = await User.findOne({_id:id}).select("-password");
+            const postbyuser = await Post.find({uploadedBy:id}).sort({createdAt:-1});
+            res.json({user:userdata , posts:postbyuser})
+        } catch (error) {
+            res.send(error)
+        }
     }
+    else if(username){
+        try {
+            const userdata = await User.findOne({username:username}).select("-password");
+            const postbyuser = await Post.find({uploadedBy:userdata._id}).sort({createdAt:-1});
+            res.json({user:userdata , posts:postbyuser})
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    
 }
 
 const changeprofilepic = async(req,res)=>{

@@ -7,7 +7,7 @@ router.post('/login',auth.login)
 router.post('/del',fetchuser,user.deleteprofile)
 router.put('/createprofile' , fetchuser , user.createprofile)
 router.put('/updateprofile',fetchuser,user.editprofile)
-router.get('/getdata/:id' , user.getuserdetails)
+router.get('/getdata' , user.getuserdetails)
 router.put('/follow/:id' ,fetchuser, user.followuser);
 router.put('/unfollow/:id' ,fetchuser, user.unfollowuser);
 router.put('/changeprofilepicture' , fetchuser, user.changeprofilepic)
