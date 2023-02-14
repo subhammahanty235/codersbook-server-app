@@ -14,16 +14,16 @@ const showallposts = async (req, res) => {
     try {
         // console.log("shsuhhuhtghtufrfu")
         const userid = req.user.id
-        const followings_user = await User.findOne({_id:userid}).select("following -_id");
-        const followedPosts = await Post.find({'uploadedBy': {$in: followings_user.following}}).sort({createdAt: -1});
-        const otherPosts = await Post.find({'uploadedBy': {$nin: followings_user.following}}).sort({createdAt: -1});
+        const followings_user = await User.findOne({ _id: userid }).select("following -_id");
+        const followedPosts = await Post.find({ 'uploadedBy': { $in: followings_user.following } }).sort({ createdAt: -1 });
+        const otherPosts = await Post.find({ 'uploadedBy': { $nin: followings_user.following } }).sort({ createdAt: -1 });
         otherPosts.sort(() => Math.random() - 0.5);
-        if(followedPosts){
+        if (followedPosts) {
             const posts = followedPosts.concat(otherPosts);
             res.send(posts)
 
         }
-        else{
+        else {
             res.send(otherPosts)
         }
 
@@ -58,7 +58,7 @@ const uploadpost = async (req, res) => {
 const likepost = async (req, res) => {
     const id = req.user.id;
     const postid = req.params.id;
-    const { dislikeflag } = req.query;
+    const { dislikeflag } = req?.query;
 
     try {
 
@@ -75,21 +75,7 @@ const likepost = async (req, res) => {
                         .status(404)
                         .json({ flag: false, message: "Post Not found" });
 
-                    Post.findByIdAndUpdate(postid, { $push: { likes: id } }).exec((err, data) => {
-                        if (err) {
-                            res.status(502).json({ flag: false, message: err.message });
-                        }
-                        if (data) {
-                            return res.status(200).json({ flag: true, details: data });
-                        }
-                        else {
-                            return res
-                                .status(404)
-                                .json({ flag: false, message: "Post Not found" });
 
-
-                        }
-                    })
                 }
             })
 
@@ -194,4 +180,4 @@ const removeapost = async (req, res) => {
 
 
 // module.exports = { uploadpost, likepost, commentonpost, removeapost, editapost }
-module.exports = {showallposts, uploadpost, likepost, commentonpost, removeapost, editapost }
+module.exports = { showallposts, uploadpost, likepost, commentonpost, removeapost, editapost }
