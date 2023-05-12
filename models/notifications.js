@@ -8,12 +8,12 @@ const notificationSchema = new Schema({
   },
   sender: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "users",
     required: true
   },
   receiver: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "users",
     required: true
   },
   post: {
